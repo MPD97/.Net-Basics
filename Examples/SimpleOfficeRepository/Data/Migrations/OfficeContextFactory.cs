@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using SimpleOfficeRepository.Data.Entities;
+﻿using System.IO;
 using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using SimpleOfficeRepository.Data.Entities;
+
 
 namespace SimpleOfficeRepository.Data.Migrations
 {
@@ -8,7 +12,11 @@ namespace SimpleOfficeRepository.Data.Migrations
     {
         public OfficeContext CreateDbContext(string[] args)
         {
-            throw new NotImplementedException();
+            var config = new ConfigurationBuilder()
+          .SetBasePath(Directory.GetCurrentDirectory())
+          .AddJsonFile("appsettings.json")
+          .Build();
+
         }
     }
 }
