@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SimpleOfficeRepositoryCore.Data.Entities;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimpleOfficeRepositoryCore.Data
@@ -17,22 +19,44 @@ namespace SimpleOfficeRepositoryCore.Data
 
         public void Add<T>(T entity) where T : class
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation($"Adding an object of type {entity.GetType()} to the context.");
+            _context.Add(entity);
         }
 
         public void Delete<T>(T entity) where T : class
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation($"Removing an object of type {entity.GetType()} to the context.");
+            _context.Remove(entity);
         }
 
-        public Task<Desk[]> GetAllDesksAsync(bool includeOwner = false, bool includeRoom = false)
+        public async Task<bool> SaveChangesAsync()
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation($"Attempitng to save the changes in the context");
+
+            // Only return success if at least one row was changed
+            return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public Task<Office[]> GetAllOfficesAsync()
+        public async Task<Desk[]> GetAllDesksAsync(bool includeOwner = false, bool includeRoom = false)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Desk> query = _context.Desks;
+            
+            if (includeOwner)
+            {
+                query = query.Include(a => a.Owner);   
+            }
+
+            if (includeRoom)
+            {
+                query = query.Include(a => a.Room);
+            }
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Office[]> GetAllOfficesAsync()
+        {
+            return await _context.Offices.ToArrayAsync();
         }
 
         public Task<Person[]> GetAllPersonsAsync()
@@ -61,11 +85,6 @@ namespace SimpleOfficeRepositoryCore.Data
         }
 
         public Task<Room> GetRoomAsync(int roomId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> SaveChangesAsync()
         {
             throw new System.NotImplementedException();
         }
