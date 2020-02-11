@@ -31,11 +31,11 @@ namespace RESTWebService.Controllers
             try
             {
                 _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass.");
-                IQueryable<Office> query = _officeContext.Offices
-                    .Include(a => a.Employees)
-                    .Include(a => a.Rooms);
+                IQueryable<Office> query = _officeContext.Offices;
+                    query = query.Include(a => a.Employees);
 
-                return Ok( await query.ToArrayAsync());
+                var result = await query.ToArrayAsync();
+                return Ok(result);
             }
             catch (Exception ex)
             {
