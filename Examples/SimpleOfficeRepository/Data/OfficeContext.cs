@@ -100,6 +100,43 @@ namespace SimpleOfficeRepository.Data.Entities
                     NumberOfWindows = 5,
                 }
              );
+            modelBuilder.Entity<Desk>()
+                .HasData(new 
+                {
+                    DeskId = 1,
+                    Length = 2.33,
+                    Width = 1.15,
+                    Height = 1.05,
+                    OwnerId = 1,
+                    RoomId = 2
+                },
+                new
+                {
+                    DeskId = 2,
+                    Length = 2.11,
+                    Width = 1.35,
+                    Height = 1.15,
+                    OwnerId = 3,
+                    RoomId = 1
+                }, new
+                {
+                    DeskId = 3,
+                    Length = 1.83,
+                    Width = 1.07,
+                    Height = 0.95,
+                    OwnerId = 1,
+                    RoomId = 2
+                },
+                new
+                {
+                    DeskId = 4,
+                    Length = 1.70,
+                    Width = 1.70,
+                    Height = 1.35,
+                    OwnerId = 2,
+                    RoomId = 4
+                }
+             );
         }
     }
 }
