@@ -124,7 +124,7 @@
     <Compile Include="Data\Entities\Office.cs" />
     <Compile Include="Data\Entities\Person.cs" />
     <Compile Include="Data\Entities\Room.cs" />
-    <Compile Include="Data\Migrations\OfficeContextFactory.cs" />
+    <Compile Include="Data\OfficeContextFactory.cs" />
     <Compile Include="Data\OfficeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleOfficeRepository.rd.xml" />
