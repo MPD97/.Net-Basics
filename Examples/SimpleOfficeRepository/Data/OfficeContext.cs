@@ -72,7 +72,34 @@ namespace SimpleOfficeRepository.Data.Entities
                     Location = "plac Politechniki 1, 00-661 Warszawa",
                 }
              );
-
+            modelBuilder.Entity<Room>()
+                .HasData(new Room
+                {
+                   RoomId = 1,
+                   RoomNumber = 233,
+                   NumberOfWindows = 3,
+                }, new Room
+                {
+                    RoomId = 2,
+                    RoomNumber = 41,
+                    NumberOfWindows = 2,
+                }, new Room
+                {
+                    RoomId = 3,
+                    RoomNumber = 74,
+                    NumberOfWindows = 6,
+                }, new Room
+                {
+                    RoomId = 4,
+                    RoomNumber = 331,
+                    NumberOfWindows = 0,
+                }, new Room
+                {
+                    RoomId = 5,
+                    RoomNumber = 15,
+                    NumberOfWindows = 5,
+                }
+             );
         }
     }
 }
