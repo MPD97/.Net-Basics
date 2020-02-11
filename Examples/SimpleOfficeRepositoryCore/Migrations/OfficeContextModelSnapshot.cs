@@ -55,6 +55,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             DeskId = 1,
                             Height = 1.05,
                             Length = 2.3300000000000001,
+                            OwnerPersonId = 1,
                             RoomId = 2,
                             Width = 1.1499999999999999
                         },
@@ -63,6 +64,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             DeskId = 2,
                             Height = 1.1499999999999999,
                             Length = 2.1099999999999999,
+                            OwnerPersonId = 3,
                             RoomId = 1,
                             Width = 1.3500000000000001
                         },
@@ -71,6 +73,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             DeskId = 3,
                             Height = 0.94999999999999996,
                             Length = 1.8300000000000001,
+                            OwnerPersonId = 1,
                             RoomId = 2,
                             Width = 1.0700000000000001
                         },
@@ -79,6 +82,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             DeskId = 4,
                             Height = 1.3500000000000001,
                             Length = 1.7,
+                            OwnerPersonId = 2,
                             RoomId = 4,
                             Width = 1.7
                         });
@@ -154,6 +158,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             Age = 22,
                             FirstName = "Matthew",
                             HireDate = new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OfficeId = 2,
                             Sex = 2,
                             Surename = "Coolman"
                         },
@@ -163,6 +168,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             Age = 32,
                             FirstName = "Chris",
                             HireDate = new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OfficeId = 1,
                             Sex = 2,
                             Surename = "Baldman"
                         },
@@ -172,6 +178,7 @@ namespace SimpleOfficeRepositoryCore.Migrations
                             Age = 38,
                             FirstName = "Kate",
                             HireDate = new DateTime(2008, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OfficeId = 2,
                             Sex = 1,
                             Surename = "Talklady"
                         });
@@ -204,30 +211,35 @@ namespace SimpleOfficeRepositoryCore.Migrations
                         {
                             RoomId = 1,
                             NumberOfWindows = 3,
+                            OfficeId = 1,
                             RoomNumber = 233
                         },
                         new
                         {
                             RoomId = 2,
                             NumberOfWindows = 2,
+                            OfficeId = 2,
                             RoomNumber = 41
                         },
                         new
                         {
                             RoomId = 3,
                             NumberOfWindows = 6,
+                            OfficeId = 1,
                             RoomNumber = 74
                         },
                         new
                         {
                             RoomId = 4,
                             NumberOfWindows = 0,
+                            OfficeId = 1,
                             RoomNumber = 331
                         },
                         new
                         {
                             RoomId = 5,
                             NumberOfWindows = 5,
+                            OfficeId = 2,
                             RoomNumber = 15
                         });
                 });

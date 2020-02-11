@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleOfficeRepositoryCore.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,20 +98,21 @@ namespace SimpleOfficeRepositoryCore.Migrations
             migrationBuilder.InsertData(
                 table: "Offices",
                 columns: new[] { "OfficeId", "CompanyName", "Location" },
-                values: new object[,]
-                {
-                    { 1, "Flying Cars Company", "Kornela Ujejskiego 75, 85-168 Bydgoszcz" },
-                    { 2, "Hire Apprentice Only Company", "plac Politechniki 1, 00-661 Warszawa" }
-                });
+                values: new object[] { 1, "Flying Cars Company", "Kornela Ujejskiego 75, 85-168 Bydgoszcz" });
+
+            migrationBuilder.InsertData(
+                table: "Offices",
+                columns: new[] { "OfficeId", "CompanyName", "Location" },
+                values: new object[] { 2, "Hire Apprentice Only Company", "plac Politechniki 1, 00-661 Warszawa" });
 
             migrationBuilder.InsertData(
                 table: "People",
                 columns: new[] { "PersonId", "Age", "FirstName", "HireDate", "OfficeId", "Sex", "Surename" },
                 values: new object[,]
                 {
-                    { 1, 22, "Matthew", new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2, "Coolman" },
-                    { 2, 32, "Chris", new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 2, "Baldman" },
-                    { 3, 38, "Kate", new DateTime(2008, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, "Talklady" }
+                    { 2, 32, "Chris", new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, "Baldman" },
+                    { 1, 22, "Matthew", new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2, "Coolman" },
+                    { 3, 38, "Kate", new DateTime(2008, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 1, "Talklady" }
                 });
 
             migrationBuilder.InsertData(
@@ -119,11 +120,11 @@ namespace SimpleOfficeRepositoryCore.Migrations
                 columns: new[] { "RoomId", "NumberOfWindows", "OfficeId", "RoomNumber" },
                 values: new object[,]
                 {
-                    { 1, 3, null, 233 },
-                    { 2, 2, null, 41 },
-                    { 3, 6, null, 74 },
-                    { 4, 0, null, 331 },
-                    { 5, 5, null, 15 }
+                    { 1, 3, 1, 233 },
+                    { 3, 6, 1, 74 },
+                    { 4, 0, 1, 331 },
+                    { 2, 2, 2, 41 },
+                    { 5, 5, 2, 15 }
                 });
 
             migrationBuilder.InsertData(
@@ -131,10 +132,10 @@ namespace SimpleOfficeRepositoryCore.Migrations
                 columns: new[] { "DeskId", "Height", "Length", "OwnerPersonId", "RoomId", "Width" },
                 values: new object[,]
                 {
-                    { 2, 1.1499999999999999, 2.1099999999999999, null, 1, 1.3500000000000001 },
-                    { 1, 1.05, 2.3300000000000001, null, 2, 1.1499999999999999 },
-                    { 3, 0.94999999999999996, 1.8300000000000001, null, 2, 1.0700000000000001 },
-                    { 4, 1.3500000000000001, 1.7, null, 4, 1.7 }
+                    { 4, 1.3500000000000001, 1.7, 2, 4, 1.7 },
+                    { 2, 1.1499999999999999, 2.1099999999999999, 3, 1, 1.3500000000000001 },
+                    { 1, 1.05, 2.3300000000000001, 1, 2, 1.1499999999999999 },
+                    { 3, 0.94999999999999996, 1.8300000000000001, 1, 2, 1.0700000000000001 }
                 });
 
             migrationBuilder.CreateIndex(
