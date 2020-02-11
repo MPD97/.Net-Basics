@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace SimpleOfficeRepository.Data.Entities
 {
-    class OfficeContext : DbContext
+   public class OfficeContext : DbContext
     {
         private readonly IConfiguration _config;
 
