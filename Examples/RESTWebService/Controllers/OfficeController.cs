@@ -20,11 +20,18 @@ namespace RESTWebService.Controllers
         {
             _officeContext = context;
         }
+
         public async Task<IActionResult> GetAll()
         {
-            var offices = await _officeContext.Offices.ToListAsync();
-           
-            return new ObjectResult(offices);
+            try
+            {
+                var offices = await _officeContext.Offices.ToListAsync();
+                return Ok(offices);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
+            }
         }
     }
 }

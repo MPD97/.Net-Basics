@@ -18,6 +18,7 @@ namespace RESTWebService
         {
             services.AddDbContext<OfficeContext>();
             services.AddMvc( options => options.EnableEndpointRouting = false);
+            
             //TODO: context.Database.Migrate();
         }
 
