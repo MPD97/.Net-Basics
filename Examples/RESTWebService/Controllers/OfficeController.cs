@@ -25,12 +25,13 @@ namespace RESTWebService.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var offices = await _officeContext.Offices.ToListAsync();
-                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name.Replace(">d__3","").Replace("<","")}], in: [{GetType().Name}] calass.");
+                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass.");
+                var offices = await _officeContext.Offices.ToArrayAsync();
 
                 return Ok(offices);
             }
@@ -40,5 +41,37 @@ namespace RESTWebService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
             }
         }
+        [HttpGet("{OfficeId}")]
+        public async Task<IActionResult> Get(int officeId)
+        {
+            try
+            {
+                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass with.");
+                var office = await _officeContext.Offices.Where(x => x.OfficeId == officeId).ToArrayAsync();
+                
+                return Ok(office);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
+            }
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> Add([FromBody]Office model)
+        //{
+        //    try
+        //    {
+        //        var addedOffice = _officeContext.Add(model).State;
+
+        //        _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name.Replace(">d__3", "").Replace("<", "")}], in: [{GetType().Name}] calass.");
+        //        return CreatedAtRoute("GetById", new { id = model.OfficeId}, addedOffice);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.ToString());
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
+        //    }
+        //}
     }
 }
