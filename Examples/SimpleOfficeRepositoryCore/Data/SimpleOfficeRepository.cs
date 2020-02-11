@@ -40,10 +40,10 @@ namespace SimpleOfficeRepositoryCore.Data
         public async Task<Desk[]> GetAllDesksAsync(bool includeOwner = false, bool includeRoom = false)
         {
             IQueryable<Desk> query = _context.Desks;
-            
+
             if (includeOwner)
             {
-                query = query.Include(a => a.Owner);   
+                query = query.Include(a => a.Owner);
             }
 
             if (includeRoom)
@@ -76,24 +76,44 @@ namespace SimpleOfficeRepositoryCore.Data
 
         }
 
-        public Task<Desk> GetDeskAsync(int deskId, bool includeOwner, bool includeRoom = false)
+        public async Task<Desk> GetDeskAsync(int deskId, bool includeOwner, bool includeRoom = false)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Desk> query = _context.Desks.Where(a => a.DeskId == deskId);
+            if (includeOwner)
+            {
+                query = query.Include(a => a.Owner);
+            }
+            if (includeRoom)
+            {
+                query = query.Include(a => a.Room);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task<Office> GetOfficeAsync(int officeId, bool includeEmployees = false)
+        public async Task<Office> GetOfficeAsync(int officeId, bool includeEmployees = false)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Office> query = _context.Offices.Where(a => a.OfficeId == officeId);
+            if (includeEmployees)
+            {
+                query = query.Include(a => a.Employees);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task<Person> GetPersonAsync(int personId)
+        public async Task<Person> GetPersonAsync(int personId)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Person> query = _context.People.Where(a => a.PersonId == personId);
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task<Room> GetRoomAsync(int roomId)
+        public async Task<Room> GetRoomAsync(int roomId)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Room> query = _context.Rooms.Where(a => a.RoomId == roomId);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }
