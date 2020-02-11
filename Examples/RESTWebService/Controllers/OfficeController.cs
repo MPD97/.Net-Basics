@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleOfficeRepositoryCore.Data.Entities;
 
@@ -19,9 +20,9 @@ namespace RESTWebService.Controllers
         {
             _officeContext = context;
         }
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var offices = _officeContext.Offices.ToList();
+            var offices = await _officeContext.Offices.ToListAsync();
            
             return new ObjectResult(offices);
         }
