@@ -8,5 +8,6 @@ namespace SimpleOfficeRepository.Data.Entities
 {
     class Person
     {
+
     }
 }
