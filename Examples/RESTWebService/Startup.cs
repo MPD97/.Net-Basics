@@ -16,6 +16,8 @@ namespace RESTWebService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OfficeContext>();
+            
+            services.AddMvc( options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,15 +28,7 @@ namespace RESTWebService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
+            app.UseMvc();
         }
     }
 }
