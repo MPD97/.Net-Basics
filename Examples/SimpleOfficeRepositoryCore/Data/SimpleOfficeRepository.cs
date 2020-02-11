@@ -51,22 +51,29 @@ namespace SimpleOfficeRepositoryCore.Data
                 query = query.Include(a => a.Room);
             }
 
-            return await query.ToArrayAsync();
+            return await query.OrderByDescending(a => a.DeskId).ToArrayAsync();
         }
 
         public async Task<Office[]> GetAllOfficesAsync()
         {
-            return await _context.Offices.ToArrayAsync();
+            return await _context.Offices.OrderByDescending(a => a.OfficeId).ToArrayAsync();
         }
 
-        public Task<Person[]> GetAllPersonsAsync()
+        public async Task<Person[]> GetAllPersonsAsync()
         {
-            throw new System.NotImplementedException();
+            return await _context.People.OrderByDescending(a => a.PersonId).ToArrayAsync();
         }
 
-        public Task<Room[]> GetAllRoomsAsync(bool includeDesks = false)
+        public async Task<Room[]> GetAllRoomsAsync(bool includeDesks = false)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Room> query = _context.Rooms;
+            if (includeDesks)
+            {
+                query = query.Include(a => a.Desks);
+            }
+
+            return await query.OrderByDescending(a => a.RoomId).ToArrayAsync();
+
         }
 
         public Task<Desk> GetDeskAsync(int deskId, bool includeOwner, bool includeRoom = false)
