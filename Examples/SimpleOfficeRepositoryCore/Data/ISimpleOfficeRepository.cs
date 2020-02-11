@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleOfficeRepositoryCore.Data
 {
-    interface ISimpleOfficeRepository
+    public interface ISimpleOfficeRepository
     {
         // General 
         void Add<T>(T entity) where T : class;
@@ -24,7 +24,7 @@ namespace SimpleOfficeRepositoryCore.Data
         // Person
         Task<Person[]> GetAllPersonsAsync();
         Task<Person> GetPersonAsync(int personId);
-        
+
         // Room
         Task<Room[]> GetAllRoomsAsync(bool includeDesks = false);
         Task<Room> GetRoomAsync(int roomId);
