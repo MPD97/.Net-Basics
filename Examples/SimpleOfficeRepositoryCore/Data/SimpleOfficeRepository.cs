@@ -1,10 +1,20 @@
-﻿using SimpleOfficeRepositoryCore.Data.Entities;
+﻿using Microsoft.Extensions.Logging;
+using SimpleOfficeRepositoryCore.Data.Entities;
 using System.Threading.Tasks;
 
 namespace SimpleOfficeRepositoryCore.Data
 {
     public class SimpleOfficeRepository : ISimpleOfficeRepository
     {
+        private OfficeContext _context;
+        private ILogger<OfficeContext> _logger;
+
+        public SimpleOfficeRepository(OfficeContext context, ILogger<OfficeContext> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+
         public void Add<T>(T entity) where T : class
         {
             throw new System.NotImplementedException();
