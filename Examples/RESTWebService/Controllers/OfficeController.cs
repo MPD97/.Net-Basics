@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SimpleOfficeRepositoryCore.Data;
 using SimpleOfficeRepositoryCore.Data.Entities;
 
 namespace RESTWebService.Controllers
@@ -16,12 +17,12 @@ namespace RESTWebService.Controllers
     [ApiController]
     public class OfficeController : ControllerBase
     {
-        private OfficeContext _officeContext;
+        private ISimpleOfficeRepository _repo;
         private ILogger<OfficeContext> _logger;
 
-        public OfficeController(OfficeContext context, ILogger<OfficeContext> logger)
+        public OfficeController(ISimpleOfficeRepository repository, ILogger<OfficeContext> logger)
         {
-            _officeContext = context;
+            _repo = repository;
             _logger = logger;
         }
 
@@ -31,13 +32,8 @@ namespace RESTWebService.Controllers
             try
             {
                 _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass.");
-                IQueryable<Office> query = _officeContext.Offices
-                    .Include(a => a.Employees)
-                    .Include(a => a.Rooms);
-                    
 
-                var result = await query.ToArrayAsync();
-                return Ok(result);
+                return Ok(await _repo.GetAllOfficesAsync());
             }
             catch (Exception ex)
             {
@@ -51,9 +47,8 @@ namespace RESTWebService.Controllers
             try
             {
                 _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass with.");
-                var office = await _officeContext.Offices.Where(x => x.OfficeId == officeId).ToArrayAsync();
                 
-                return Ok(office);
+                return Ok(await _repo.GetOfficeAsync(officeId));
             }
             catch (Exception ex)
             {
