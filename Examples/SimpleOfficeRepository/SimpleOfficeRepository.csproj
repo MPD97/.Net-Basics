@@ -120,7 +120,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Data\Entities\Desk.cs" />
     <Compile Include="Data\Entities\Office.cs" />
     <Compile Include="Data\Migrations\OfficeContextFactory.cs" />
