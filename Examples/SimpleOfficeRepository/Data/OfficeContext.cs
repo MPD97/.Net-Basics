@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace SimpleOfficeRepository.Data.Entities
 {
-   public class OfficeContext : DbContext
+    public class OfficeContext : DbContext
     {
         private readonly IConfiguration _config;
 
@@ -18,10 +18,10 @@ namespace SimpleOfficeRepository.Data.Entities
             _config = configuration;
         }
 
-        DbSet<Desk> Desks { get; set; }
-        DbSet<Office> Offices { get; set; }
-        DbSet<Person> People { get; set; }
-        DbSet<Room> Rooms { get; set; }
+        public DbSet<Desk> Desks { get; set; }
+        public DbSet<Office> Offices { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

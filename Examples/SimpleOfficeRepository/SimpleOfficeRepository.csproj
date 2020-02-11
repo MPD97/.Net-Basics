@@ -122,10 +122,10 @@
   <ItemGroup>
     <Compile Include="Data\Entities\Desk.cs" />
     <Compile Include="Data\Entities\Office.cs" />
-    <Compile Include="Data\Migrations\OfficeContextFactory.cs" />
-    <Compile Include="Data\OfficeContext.cs" />
     <Compile Include="Data\Entities\Person.cs" />
     <Compile Include="Data\Entities\Room.cs" />
+    <Compile Include="Data\Migrations\OfficeContextFactory.cs" />
+    <Compile Include="Data\OfficeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleOfficeRepository.rd.xml" />
   </ItemGroup>
@@ -148,9 +148,6 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="appsettings.json" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
