@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleOfficeRepository.Data.Entities
 {
-    class Desk
+    public class Desk
     {
         public int DeskId { get; set; }
         public double Length { get; set; }
