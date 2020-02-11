@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using SimpleOfficeRepositoryCore.Data;
 using SimpleOfficeRepositoryCore.Data.Entities;
 
 namespace RESTWebService
@@ -18,6 +19,8 @@ namespace RESTWebService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OfficeContext>();
+            services.AddSingleton<ISimpleOfficeRepository, SimpleOfficeRepository>();
+
             services.AddMvc( options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
