@@ -8,5 +8,9 @@ namespace SimpleOfficeRepository.Data.Entities
 {
     class Room
     {
+        public int RoomId { get; set; }
+        public int RoomNumber { get; set; }
+        public int NumberOfWindows { get; set; }
+        public ICollection<Desk> Desks { get; set; }
     }
 }
