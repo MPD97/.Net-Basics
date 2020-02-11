@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace SimpleOfficeRepository.Data.Entities
+namespace SimpleOfficeRepositoryCore.Data.Entities
 {
     public class OfficeContext : DbContext
     {

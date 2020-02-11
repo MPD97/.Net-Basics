@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleOfficeRepository.Data.Entities
+namespace SimpleOfficeRepositoryCore.Data.Entities
 {
     public class Person
     {

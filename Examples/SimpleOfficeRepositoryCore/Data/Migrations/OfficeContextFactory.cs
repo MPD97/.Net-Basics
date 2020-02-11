@@ -3,10 +3,10 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using SimpleOfficeRepository.Data.Entities;
+using SimpleOfficeRepositoryCore.Data.Entities;
 
 
-namespace SimpleOfficeRepository.Data.Migrations
+namespace SimpleOfficeRepositoryCore.Data.Migrations
 {
     class OfficeContextFactory : IDesignTimeDbContextFactory<OfficeContext>
     {
