@@ -58,15 +58,21 @@ namespace SimpleOfficeRepository.Data.Entities
                      HireDate = new DateTime(2008, 4, 20),
                      Sex = Sex.Female
                  });
-            modelBuilder.Entity<Desk>()
+            modelBuilder.Entity<Office>()
                 .HasData(new
                 {
-                   DeskId = 1,
-                   PersonId = 1,
-
-                    
+                    OfficeId = 1,
+                    CompanyName = "Flying Cars Company",
+                    Location = "Kornela Ujejskiego 75, 85-168 Bydgoszcz"
+                },
+                new
+                {
+                    OfficeId = 2,
+                    CompanyName = "Hire Apprentice Only Company",
+                    Location = "plac Politechniki 1, 00-661 Warszawa",
                 }
              );
+
         }
     }
 }
