@@ -14,6 +14,7 @@ namespace SimpleOfficeRepository.Data.Entities
         public int Age { get; set; }
         public Sex Sex { get; set; }
         public DateTime HireDate { get; set; }
+        public Office Office { get; set; }
     }
     public enum Sex
     {

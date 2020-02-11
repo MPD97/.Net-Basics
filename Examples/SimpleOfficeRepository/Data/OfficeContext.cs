@@ -58,6 +58,15 @@ namespace SimpleOfficeRepository.Data.Entities
                      HireDate = new DateTime(2008, 4, 20),
                      Sex = Sex.Female
                  });
+            modelBuilder.Entity<Desk>()
+                .HasData(new
+                {
+                   DeskId = 1,
+                   PersonId = 1,
+
+                    
+                }
+             );
         }
     }
 }

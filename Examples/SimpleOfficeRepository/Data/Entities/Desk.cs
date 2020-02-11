@@ -13,5 +13,6 @@ namespace SimpleOfficeRepository.Data.Entities
         public double Width { get; set; }
         public double Height { get; set; }
         public Person Owner { get; set; }
+        public Room Room { get; set; }
     }
 }
