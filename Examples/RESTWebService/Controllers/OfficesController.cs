@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using RESTWebService.ViewModels;
 using SimpleOfficeRepositoryCore.Data;
@@ -15,13 +16,15 @@ namespace RESTWebService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OfficeController : ControllerBase
+    public class OfficesController : ControllerBase
     {
         private readonly ISimpleOfficeRepository _repo;
         private readonly ILogger<OfficeContext> _logger;
         private readonly IMapper _mapper;
 
-        public OfficeController(ISimpleOfficeRepository repository, ILogger<OfficeContext> logger, IMapper mapper)
+        public OfficesController(ISimpleOfficeRepository repository,
+            ILogger<OfficeContext> logger,
+            IMapper mapper )
         {
             _repo = repository;
             _logger = logger;
@@ -43,7 +46,7 @@ namespace RESTWebService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
             }
         }
-        [HttpGet("{OfficeId}")]
+        [HttpGet("{officeId}")]
         public async Task<ActionResult<Office>> Get(int officeId)
         {
             try
@@ -80,8 +83,7 @@ namespace RESTWebService.Controllers
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
                 }
-
-                return CreatedAtRoute("", new { OfficeId = office.OfficeId }, office);
+                return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
             }
             catch (Exception ex)
             {
