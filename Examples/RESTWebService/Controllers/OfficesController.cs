@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using RESTWebService.ViewModels;
@@ -36,8 +37,6 @@ namespace RESTWebService.Controllers
         {
             try
             {
-                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass.");
-
                 return Ok(await _repo.GetAllOfficesAsync());
             }
             catch (Exception ex)
@@ -51,8 +50,6 @@ namespace RESTWebService.Controllers
         {
             try
             {
-                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}], in: [{GetType().Name}] calass with.");
-                
                 return Ok(await _repo.GetOfficeAsync(officeId));
             }
             catch (Exception ex)
@@ -66,16 +63,11 @@ namespace RESTWebService.Controllers
         {
             try
             {
-                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}] calass.");
-
                 if (ModelState.IsValid == false)
                 {
-                    var errors = ModelState.Select(x => x.Value.Errors)
-                       .Where(y => y.Count > 0)
-                       .ToList();
-                    return BadRequest(errors);
+                    return BadRequest(CollectErrors());
                 }
-                
+
                 Office office = _mapper.Map<Office>(model);
                 _repo.Add(office);
 
@@ -90,6 +82,15 @@ namespace RESTWebService.Controllers
                 _logger.LogError(ex.ToString());
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
             }
+        }
+
+
+
+        private List<ModelErrorCollection> CollectErrors()
+        {
+            return ModelState.Select(x => x.Value.Errors)
+               .Where(y => y.Count > 0)
+               .ToList();
         }
     }
 }
