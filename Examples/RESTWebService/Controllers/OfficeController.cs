@@ -29,7 +29,7 @@ namespace RESTWebService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<Office[]>> GetAll()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace RESTWebService.Controllers
             }
         }
         [HttpGet("{OfficeId}")]
-        public async Task<IActionResult> Get(int officeId)
+        public async Task<ActionResult<Office>> Get(int officeId)
         {
             try
             {
@@ -63,19 +63,25 @@ namespace RESTWebService.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
-                {
-                    //TODO map
-                    //_repo.Add(model);
-                }
+                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name}] calass.");
 
+                if (ModelState.IsValid == false)
+                {
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                       .Where(y => y.Count > 0)
+                       .ToList();
+                    return BadRequest(errors);
+                }
+                
+                Office office = _mapper.Map<Office>(model);
+                _repo.Add(office);
 
                 if (await _repo.SaveChangesAsync() == false)
                 {
-                    return StatusCode(StatusCodes.Status304NotModified, "Failed to save data into database");
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
                 }
-                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name.Replace(">d__3", "").Replace("<", "")}], in: [{GetType().Name}] calass.");
-                return CreatedAtRoute("Get", new { OfficeId = office.OfficeId });
+
+                return CreatedAtRoute("", new { OfficeId = office.OfficeId }, office);
             }
             catch (Exception ex)
             {

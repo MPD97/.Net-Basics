@@ -19,7 +19,14 @@ namespace RESTWebService
         {
             services.AddDbContext<OfficeContext>();
             services.AddScoped<ISimpleOfficeRepository, SimpleOfficeRepository>();
-            services.AddAutoMapper(typeof(Startup));
+           
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new OfficeProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddMvc( options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
@@ -33,7 +40,7 @@ namespace RESTWebService
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseMvc();
         }
     }
