@@ -25,7 +25,7 @@ namespace RESTWebService.Controllers
 
         public OfficesController(ISimpleOfficeRepository repository,
             ILogger<OfficeContext> logger,
-            IMapper mapper )
+            IMapper mapper)
         {
             _repo = repository;
             _logger = logger;
@@ -80,38 +80,69 @@ namespace RESTWebService.Controllers
                 {
                     return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
                 }
-                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unknown error occurred.");
             }
+            return BadRequest();
         }
 
         [HttpPut]
         public async Task<ActionResult<Office>> Put(OfficeModel model)
         {
-            if (ModelState.IsValid == false)
+            try
             {
-                return BadRequest(CollectErrors());
+                if (ModelState.IsValid == false)
+                {
+                    return BadRequest(CollectErrors());
+                }
+
+                Office office = await _repo.GetOfficeByCompanyNameAsync(model.CompanyName);
+
+                if (office == null)
+                {
+                    return NotFound("Could not find office with this company name");
+                }
+
+                _mapper.Map(model, office);
+
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
+                }
             }
-
-            Office office = await _repo.GetOfficeByCompanyNameAsync(model.CompanyName);
-
-            if (office == null)
+            catch (Exception ex)
             {
-                return NotFound("Could not find office with this company name");
+                _logger.LogError(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unknown error occurred.");
             }
-
-            _mapper.Map(model, office);
-
-            if (await _repo.SaveChangesAsync())
+            return BadRequest("Nothing changed.");
+        }
+        [HttpDelete("{officeId}")]
+        public async Task<IActionResult> Delete(int officeId)
+        {
+            try
             {
-                return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
-            }
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
+                Office office = await _repo.GetOfficeAsync(officeId);
+                if (office == null)
+                {
+                    return NotFound("Could not find office with this company name");
+                }
 
+                _repo.Delete(office);
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unknown error occurred.");
+            }
+            return BadRequest();
         }
 
         private List<ModelErrorCollection> CollectErrors()
