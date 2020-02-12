@@ -115,5 +115,20 @@ namespace SimpleOfficeRepositoryCore.Data
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<Office> GetOfficeByCompanyNameAsync(string companyName)
+        {
+            IQueryable<Office> query = _context.Offices.Where(a => a.CompanyName == companyName);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Person> GetPersonByUniqeAsync(string firstName, string surename)
+        {
+            IQueryable<Person> query = _context.People.Where(a => a.FirstName == firstName
+            && a.Surename == surename);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

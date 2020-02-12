@@ -20,10 +20,12 @@ namespace SimpleOfficeRepositoryCore.Data
         // Office
         Task<Office[]> GetAllOfficesAsync();
         Task<Office> GetOfficeAsync(int officeId, bool includeEmployees = false);
+        Task<Office> GetOfficeByCompanyNameAsync(string companyName);
 
         // Person
         Task<Person[]> GetAllPersonsAsync();
         Task<Person> GetPersonAsync(int personId);
+        Task<Person> GetPersonByUniqeAsync(string firstName, string surename);
 
         // Room
         Task<Room[]> GetAllRoomsAsync(bool includeDesks = false);

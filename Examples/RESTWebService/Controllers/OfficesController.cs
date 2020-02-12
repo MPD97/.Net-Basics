@@ -63,6 +63,8 @@ namespace RESTWebService.Controllers
         {
             try
             {
+                bool existing = await _repo.GetAllOfficesAsync();
+
                 if (ModelState.IsValid == false)
                 {
                     return BadRequest(CollectErrors());
