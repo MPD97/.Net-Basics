@@ -63,7 +63,10 @@ namespace RESTWebService.Controllers
         {
             try
             {
-                bool existing = await _repo.GetAllOfficesAsync();
+                if (await _repo.GetOfficeByCompanyNameAsync(model.CompanyName) != null)
+                {
+                    return BadRequest("Office with this company name already exists in database.");
+                }
 
                 if (ModelState.IsValid == false)
                 {
