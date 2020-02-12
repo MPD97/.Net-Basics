@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RESTWebService.ViewModels;
 using SimpleOfficeRepositoryCore.Data;
 using SimpleOfficeRepositoryCore.Data.Entities;
 
@@ -56,21 +57,30 @@ namespace RESTWebService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
             }
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Add([FromBody]Office model)
-        //{
-        //    try
-        //    {
-        //        var addedOffice = _officeContext.Add(model).State;
 
-        //        _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name.Replace(">d__3", "").Replace("<", "")}], in: [{GetType().Name}] calass.");
-        //        return CreatedAtRoute("GetById", new { id = model.OfficeId}, addedOffice);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.ToString());
-        //        return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
-        //    }
-        //}
+        public async Task<ActionResult<Office>> Post([FromBody]OfficeModel model)
+        {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    //TODO map
+                    //_repo.Add(model);
+                }
+
+
+                if (await _repo.SaveChangesAsync() == false)
+                {
+                    return StatusCode(StatusCodes.Status304NotModified, "Failed to save data into database");
+                }
+                _logger.LogInformation($"Requested: [{MethodBase.GetCurrentMethod().ReflectedType.Name.Replace(">d__3", "").Replace("<", "")}], in: [{GetType().Name}] calass.");
+                return CreatedAtRoute("Get", new { OfficeId = office.OfficeId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to load data from database");
+            }
+        }
     }
 }

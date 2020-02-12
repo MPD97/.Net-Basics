@@ -19,7 +19,7 @@ namespace RESTWebService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OfficeContext>();
-            services.AddSingleton<ISimpleOfficeRepository, SimpleOfficeRepository>();
+            services.AddScoped<ISimpleOfficeRepository, SimpleOfficeRepository>();
 
             services.AddMvc( options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
