@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +21,7 @@ namespace RESTWebService
         {
             services.AddDbContext<OfficeContext>();
             services.AddScoped<ISimpleOfficeRepository, SimpleOfficeRepository>();
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddMvc( options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 

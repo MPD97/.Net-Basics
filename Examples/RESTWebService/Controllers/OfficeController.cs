@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,13 +19,15 @@ namespace RESTWebService.Controllers
     [ApiController]
     public class OfficeController : ControllerBase
     {
-        private ISimpleOfficeRepository _repo;
-        private ILogger<OfficeContext> _logger;
+        private readonly ISimpleOfficeRepository _repo;
+        private readonly ILogger<OfficeContext> _logger;
+        private readonly IMapper _mapper;
 
-        public OfficeController(ISimpleOfficeRepository repository, ILogger<OfficeContext> logger)
+        public OfficeController(ISimpleOfficeRepository repository, ILogger<OfficeContext> logger, IMapper mapper)
         {
             _repo = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
