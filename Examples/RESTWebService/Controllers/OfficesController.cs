@@ -63,24 +63,24 @@ namespace RESTWebService.Controllers
         {
             try
             {
-                if (await _repo.GetOfficeByCompanyNameAsync(model.CompanyName) != null)
-                {
-                    return BadRequest("Office with this company name already exists in database.");
-                }
-
                 if (ModelState.IsValid == false)
                 {
                     return BadRequest(CollectErrors());
                 }
 
+                if (await _repo.GetOfficeByCompanyNameAsync(model.CompanyName) != null)
+                {
+                    return BadRequest("Office with this company name already exists in database.");
+                }
+
                 Office office = _mapper.Map<Office>(model);
                 _repo.Add(office);
 
-                if (await _repo.SaveChangesAsync() == false)
+                if (await _repo.SaveChangesAsync())
                 {
-                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
+                    return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
                 }
-                return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
             }
             catch (Exception ex)
             {
@@ -89,7 +89,30 @@ namespace RESTWebService.Controllers
             }
         }
 
+        [HttpPut]
+        public async Task<ActionResult<Office>> Put(OfficeModel model)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(CollectErrors());
+            }
 
+            Office office = await _repo.GetOfficeByCompanyNameAsync(model.CompanyName);
+
+            if (office == null)
+            {
+                return NotFound("Could not find office with this company name");
+            }
+
+            _mapper.Map(model, office);
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return Created(Url.Action("Get", "Offices", new { officeId = office.OfficeId }), office);
+            }
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to save data into database");
+
+        }
 
         private List<ModelErrorCollection> CollectErrors()
         {
